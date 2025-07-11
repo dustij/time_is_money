@@ -1,4 +1,5 @@
 import "package:flutter/material.dart";
+
 import "package:time_is_money/ui/theme/tailwind_colors.dart";
 
 class Layout extends StatelessWidget {
@@ -30,7 +31,6 @@ class Layout extends StatelessWidget {
               ),
             ),
           ),
-          Drawer(child: Text("Settings go here")),
           SafeArea(child: child),
         ],
       ),

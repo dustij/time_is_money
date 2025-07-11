@@ -18,6 +18,7 @@ class CustomButton extends StatefulWidget {
 
 class _CustomButtonState extends State<CustomButton> {
   double shadow = 6;
+
   @override
   Widget build(BuildContext context) {
     final colors = Theme.of(context).colorScheme;
