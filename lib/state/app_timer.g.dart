@@ -6,7 +6,7 @@ part of 'app_timer.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$appTimerHash() => r'32ec39aae97835d7cf5e69fa6c156653804ca2d2';
+String _$appTimerHash() => r'd7ed5ccd9983b0a2d1146ff85e679654edd29844';
 
 /// - To regenerate code, run:
 ///   `dart run build_runner build --delete-conflicting-outputs`.

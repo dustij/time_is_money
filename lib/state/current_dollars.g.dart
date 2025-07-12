@@ -6,7 +6,7 @@ part of 'current_dollars.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$currentDollarsHash() => r'd8bc12db7911e6dc6b93b72b577aa8382be6ab9d';
+String _$currentDollarsHash() => r'264bd090a1ee9bc0417bf6ff7127504f3405b30f';
 
 /// - To regenerate code, run:
 ///   `dart run build_runner build --delete-conflicting-outputs`.

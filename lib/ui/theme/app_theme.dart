@@ -7,7 +7,7 @@ ThemeData appTheme = ThemeData(
   colorScheme: const ColorScheme(
     brightness: Brightness.light,
     primary: TailwindColors.green400,
-    onPrimary: TailwindColors.green500,
+    onPrimary: Colors.white,
     secondary: TailwindColors.green200,
     onSecondary: TailwindColors.green500,
     tertiary: TailwindColors.blue400,

@@ -4,11 +4,11 @@ part "hourly_rate.g.dart";
 
 /// - To regenerate code, run:
 ///   `dart run build_runner build --delete-conflicting-outputs`.
-@riverpod
+@Riverpod(keepAlive: true)
 class HourlyRate extends _$HourlyRate {
   @override
   double build() {
-    return 60;
+    return 0;
   }
 
   void set(double newRate) {

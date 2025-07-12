@@ -30,7 +30,7 @@ class _CustomButtonState extends State<CustomButton> {
     final colors = Theme.of(context).colorScheme;
 
     final outlineColor = switch (widget.color) {
-      Variant.green => colors.onPrimary,
+      Variant.green => colors.onSecondary,
       Variant.red => colors.onError,
       Variant.blue => colors.onTertiary,
     };
