@@ -18,4 +18,8 @@ class CurrentDollars extends _$CurrentDollars {
   void incrementBy(double amount) {
     state += amount;
   }
+
+  void reset() {
+    state = 0;
+  }
 }

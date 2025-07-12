@@ -16,6 +16,23 @@ class NavigationService {
     );
   }
 
+  Future<dynamic> navigateFade(Widget page) {
+    return navigatorKey.currentState!.push(
+      PageRouteBuilder(
+        transitionDuration: Durations.medium1,
+        pageBuilder: (context, animation, secondaryAnimation) => page,
+        transitionsBuilder: (context, animation, secondaryAnimation, child) {
+          final curvedAnimation = CurvedAnimation(
+            parent: animation,
+            curve: Curves.easeOut,
+          );
+
+          return FadeTransition(opacity: curvedAnimation, child: child);
+        },
+      ),
+    );
+  }
+
   void goBack() {
     navigatorKey.currentState!.pop();
   }

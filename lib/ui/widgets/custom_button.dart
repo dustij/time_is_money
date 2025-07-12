@@ -1,15 +1,21 @@
 import "package:flutter/material.dart";
 
+enum Variant { green, red, blue }
+
 class CustomButton extends StatefulWidget {
   final VoidCallback onPressed;
   final String text;
-  final bool isVariant;
+  final Variant color;
+  final double width;
+  final double height;
 
   const CustomButton({
     super.key,
     required this.onPressed,
     required this.text,
-    this.isVariant = false,
+    this.color = Variant.green,
+    this.width = 200,
+    this.height = 86,
   });
 
   @override
@@ -22,8 +28,18 @@ class _CustomButtonState extends State<CustomButton> {
   @override
   Widget build(BuildContext context) {
     final colors = Theme.of(context).colorScheme;
-    final outlineColor = widget.isVariant ? colors.onError : colors.outline;
-    final bgColor = widget.isVariant ? colors.error : colors.primary;
+
+    final outlineColor = switch (widget.color) {
+      Variant.green => colors.onPrimary,
+      Variant.red => colors.onError,
+      Variant.blue => colors.onTertiary,
+    };
+
+    final bgColor = switch (widget.color) {
+      Variant.green => colors.primary,
+      Variant.red => colors.error,
+      Variant.blue => colors.tertiary,
+    };
 
     return GestureDetector(
       onTapDown: (_) => setState(() {
@@ -35,22 +51,28 @@ class _CustomButtonState extends State<CustomButton> {
         });
         widget.onPressed();
       },
-      child: AnimatedContainer(
-        padding: EdgeInsets.fromLTRB(1, 1, 1, shadow),
-        decoration: BoxDecoration(
-          color: outlineColor,
-          borderRadius: BorderRadius.circular(8),
-        ),
-        duration: const Duration(microseconds: 100),
-        child: Container(
-          padding: const EdgeInsets.symmetric(horizontal: 32, vertical: 16),
+      child: SizedBox(
+        height: widget.height,
+        child: AnimatedContainer(
+          width: widget.width,
+          padding: EdgeInsets.fromLTRB(1, 1, 1, shadow),
           decoration: BoxDecoration(
-            color: bgColor,
+            color: outlineColor,
             borderRadius: BorderRadius.circular(8),
           ),
-          child: Text(
-            widget.text,
-            style: Theme.of(context).textTheme.headlineLarge,
+          duration: Durations.short1,
+          child: Container(
+            padding: const EdgeInsets.symmetric(horizontal: 32, vertical: 16),
+            decoration: BoxDecoration(
+              color: bgColor,
+              borderRadius: BorderRadius.circular(8),
+            ),
+            child: Center(
+              child: Text(
+                widget.text,
+                style: Theme.of(context).textTheme.headlineLarge,
+              ),
+            ),
           ),
         ),
       ),

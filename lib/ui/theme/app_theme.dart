@@ -7,16 +7,16 @@ ThemeData appTheme = ThemeData(
   colorScheme: const ColorScheme(
     brightness: Brightness.light,
     primary: TailwindColors.green400,
-    onPrimary: TailwindColors.neutral900,
+    onPrimary: TailwindColors.green500,
     secondary: TailwindColors.green200,
-    onSecondary: TailwindColors.neutral900,
-    tertiary: TailwindColors.neutral500,
-    onTertiary: TailwindColors.neutral900,
+    onSecondary: TailwindColors.green500,
+    tertiary: TailwindColors.blue400,
+    onTertiary: TailwindColors.blue500,
     error: TailwindColors.red400,
     onError: TailwindColors.red500,
     surface: TailwindColors.neutral100,
     onSurface: TailwindColors.neutral800,
-    outline: TailwindColors.green500,
+    outline: TailwindColors.neutral800,
   ),
 
   textTheme: const TextTheme(

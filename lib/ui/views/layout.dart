@@ -23,8 +23,10 @@ class Layout extends StatelessWidget {
                     onPressed: () {},
                     label: const Icon(Icons.menu, size: 36),
                     style: TextButton.styleFrom(
-                      iconColor: TailwindColors.neutral800,
-                      overlayColor: TailwindColors.neutral500,
+                      iconColor: Theme.of(context).colorScheme.outline,
+                      overlayColor: Theme.of(
+                        context,
+                      ).colorScheme.outline.withAlpha(5),
                     ),
                   ),
                 ),
