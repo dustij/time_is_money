@@ -8,7 +8,7 @@ part "hourly_rate.g.dart";
 class HourlyRate extends _$HourlyRate {
   @override
   double build() {
-    return 0;
+    return 60;
   }
 
   void set(double newRate) {

@@ -10,14 +10,11 @@ class HomePage extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final viewmodel = HomeViewmodel();
+    final viewmodel = HomeViewmodel(ref);
     return Center(
       child: Hero(
         tag: "start button",
-        child: CustomButton(
-          text: "Start",
-          onPressed: () => viewmodel.startPressed(ref),
-        ),
+        child: CustomButton(text: "Start", onPressed: viewmodel.startPressed),
       ),
     );
   }

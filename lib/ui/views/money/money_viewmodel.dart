@@ -7,20 +7,24 @@ import "package:time_is_money/ui/views/home/home_page.dart";
 import "package:time_is_money/ui/views/layout.dart";
 
 class MoneyViewmodel {
-  double currentDollars(WidgetRef ref) {
-    return ref.watch(currentDollarsProvider);
+  final WidgetRef _ref;
+
+  MoneyViewmodel(this._ref);
+
+  double currentDollars() {
+    return _ref.watch(currentDollarsProvider);
   }
 
-  void stopPressed(WidgetRef ref) {
-    ref.read(appTimerProvider.notifier).stop();
+  void stopPressed() {
+    _ref.read(appTimerProvider.notifier).stop();
   }
 
-  void resumePressed(WidgetRef ref) {
-    ref.read(appTimerProvider.notifier).start();
+  void resumePressed() {
+    _ref.read(appTimerProvider.notifier).start();
   }
 
-  void savePressed(WidgetRef ref) {
-    ref.read(currentDollarsProvider.notifier).reset();
+  void savePressed() {
+    _ref.read(currentDollarsProvider.notifier).reset();
     NavigationService().navigateFade(const Layout(child: HomePage()));
   }
 }

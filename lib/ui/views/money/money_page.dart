@@ -11,11 +11,12 @@ class MoneyPage extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final viewmodel = MoneyViewmodel(ref);
+
     final isRunning = useState(true);
     final showDollars = useState(true);
     final showCheckmark = useState(false);
-    final viewmodel = MoneyViewmodel();
-    final dollars = viewmodel.currentDollars(ref);
+    final dollars = viewmodel.currentDollars();
 
     CustomButton startStopButton;
     if (isRunning.value) {
@@ -23,7 +24,7 @@ class MoneyPage extends HookConsumerWidget {
         text: "Stop",
         color: Variant.red,
         onPressed: () {
-          viewmodel.stopPressed(ref);
+          viewmodel.stopPressed();
           isRunning.value = false;
         },
       );
@@ -32,7 +33,7 @@ class MoneyPage extends HookConsumerWidget {
         text: "Resume",
         color: Variant.blue,
         onPressed: () {
-          viewmodel.resumePressed(ref);
+          viewmodel.resumePressed();
           isRunning.value = true;
         },
       );
@@ -82,9 +83,10 @@ class MoneyPage extends HookConsumerWidget {
                             onPressed: () {
                               showDollars.value = false;
                               showCheckmark.value = true;
-                              Future.delayed((Durations.long4), () {
-                                viewmodel.savePressed(ref);
-                              });
+                              Future.delayed(
+                                (Durations.long4),
+                                viewmodel.savePressed,
+                              );
                             },
                           ),
                         ),

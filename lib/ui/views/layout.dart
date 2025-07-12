@@ -4,7 +4,7 @@ import "package:flutter/services.dart";
 import "package:flutter_hooks/flutter_hooks.dart";
 import "package:hooks_riverpod/hooks_riverpod.dart";
 
-import "package:time_is_money/state/hourly_rate.dart";
+import "package:time_is_money/ui/views/layout_viewmodel.dart";
 
 class Layout extends HookConsumerWidget {
   final Widget child;
@@ -12,20 +12,13 @@ class Layout extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final hourlyRate = ref.watch(hourlyRateProvider);
-    final themeColors = Theme.of(context).colorScheme;
-    final isEditingHourly = useState(false);
-    final focusNode = useFocusNode();
-    final controller = useTextEditingController(
-      text: hourlyRate.toStringAsFixed(2),
+    final viewmodel = LayoutViewmodel(
+      ref: ref,
+      isEditingHourlyRate: useState(false),
     );
+    viewmodel.maybeRequestFocus();
 
-    useEffect(() {
-      if (isEditingHourly.value) {
-        Future.microtask(() => focusNode.requestFocus());
-      }
-      return null;
-    }, [isEditingHourly.value]);
+    final themeColors = Theme.of(context).colorScheme;
 
     return Scaffold(
       body: Builder(
@@ -60,11 +53,7 @@ class Layout extends HookConsumerWidget {
       drawer: Drawer(
         child: GestureDetector(
           behavior: HitTestBehavior.translucent,
-          onTap: () {
-            if (isEditingHourly.value) {
-              isEditingHourly.value = false;
-            }
-          },
+          onTap: viewmodel.cancelEditing,
           child: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 40),
             child: Column(
@@ -75,23 +64,11 @@ class Layout extends HookConsumerWidget {
                     spacing: 16,
                     children: [
                       GestureDetector(
-                        onTap: () {
-                          if (!isEditingHourly.value) {
-                            isEditingHourly.value = true;
-                          }
-                        },
-                        child: !isEditingHourly.value
-                            ? Text(
-                                "\$${hourlyRate.toStringAsFixed(2)}",
-                                style: Theme.of(context).textTheme.headlineLarge
-                                    ?.copyWith(
-                                      color: themeColors.outline,
-                                      fontSize: 68,
-                                    ),
-                              )
-                            : TextField(
-                                controller: controller,
-                                focusNode: focusNode,
+                        onTap: viewmodel.beginEditing,
+                        child: viewmodel.isEditingHourlyRate
+                            ? TextField(
+                                controller: viewmodel.controller,
+                                focusNode: viewmodel.focusNode,
                                 keyboardType:
                                     const TextInputType.numberWithOptions(
                                       decimal: true,
@@ -107,17 +84,20 @@ class Layout extends HookConsumerWidget {
                                       color: themeColors.outline,
                                       fontSize: 68,
                                     ),
-                                onSubmitted: (newValue) {
-                                  ref
-                                      .read(hourlyRateProvider.notifier)
-                                      .set(double.parse(newValue));
-                                  isEditingHourly.value = false;
-                                },
+                                onSubmitted: viewmodel.onSubmitted,
+                              )
+                            : Text(
+                                "\$${viewmodel.hourlyRateFormatted}",
+                                style: Theme.of(context).textTheme.headlineLarge
+                                    ?.copyWith(
+                                      color: themeColors.outline,
+                                      fontSize: 68,
+                                    ),
                               ),
                       ),
-                      !isEditingHourly.value
+                      viewmodel.isEditingHourlyRate
                           ? Text(
-                              "Per Hour",
+                              "Enter a new rate",
                               style: Theme.of(context).textTheme.headlineLarge
                                   ?.copyWith(
                                     color: themeColors.outline,
@@ -125,7 +105,7 @@ class Layout extends HookConsumerWidget {
                                   ),
                             )
                           : Text(
-                              "Enter a new rate",
+                              "Per Hour",
                               style: Theme.of(context).textTheme.headlineLarge
                                   ?.copyWith(
                                     color: themeColors.outline,
@@ -153,9 +133,7 @@ class Layout extends HookConsumerWidget {
           ),
         ),
       ),
-      onDrawerChanged: (isOpened) {
-        if (!isOpened) isEditingHourly.value = false;
-      },
+      onDrawerChanged: viewmodel.handleDrawerChanged,
     );
   }
 }
