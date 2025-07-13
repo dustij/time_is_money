@@ -24,6 +24,8 @@ class CustomButton extends StatefulWidget {
 
 class _CustomButtonState extends State<CustomButton> {
   double shadow = 6;
+  double highlight = 4;
+  double space = 0;
 
   @override
   Widget build(BuildContext context) {
@@ -44,33 +46,58 @@ class _CustomButtonState extends State<CustomButton> {
     return GestureDetector(
       onTapDown: (_) => setState(() {
         shadow = 2;
+        highlight = 2;
+        space = 4;
       }),
       onTapUp: (_) {
         setState(() {
           shadow = 6;
+          highlight = 4;
+          space = 0;
         });
         widget.onPressed();
       },
+      onTapCancel: () => setState(() {
+        shadow = 6;
+        highlight = 4;
+        space = 0;
+      }),
       child: SizedBox(
         height: widget.height,
         child: AnimatedContainer(
+          // shadow layer
           width: widget.width,
-          padding: EdgeInsets.fromLTRB(1, 1, 1, shadow),
-          decoration: BoxDecoration(
-            color: outlineColor,
-            borderRadius: BorderRadius.circular(8),
-          ),
           duration: Durations.short1,
+          padding: EdgeInsets.fromLTRB(0, space, 0, 0),
           child: Container(
-            padding: const EdgeInsets.symmetric(horizontal: 32, vertical: 16),
+            padding: EdgeInsets.fromLTRB(1, 1, 1, shadow),
             decoration: BoxDecoration(
-              color: bgColor,
+              color: outlineColor,
               borderRadius: BorderRadius.circular(8),
             ),
-            child: Center(
-              child: Text(
-                widget.text,
-                style: Theme.of(context).textTheme.headlineLarge,
+            child: Container(
+              // highlight layer
+              padding: EdgeInsets.fromLTRB(2, highlight, 1, 0),
+              decoration: BoxDecoration(
+                color: Colors.white.withAlpha(105),
+                borderRadius: BorderRadius.circular(8),
+              ),
+              child: Container(
+                // original inner content
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 32,
+                  vertical: 16,
+                ),
+                decoration: BoxDecoration(
+                  color: bgColor,
+                  borderRadius: BorderRadius.circular(8),
+                ),
+                child: Center(
+                  child: Text(
+                    widget.text,
+                    style: Theme.of(context).textTheme.headlineLarge,
+                  ),
+                ),
               ),
             ),
           ),

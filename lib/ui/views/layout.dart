@@ -128,9 +128,9 @@ class Layout extends HookConsumerWidget {
                   ),
                 ),
                 TextButton.icon(
-                  icon: const Icon(Icons.settings, size: 36),
+                  icon: const Icon(Icons.history, size: 36),
                   label: Text(
-                    "Settings",
+                    "History",
                     style: Theme.of(context).textTheme.headlineLarge?.copyWith(
                       color: themeColors.outline,
                     ),

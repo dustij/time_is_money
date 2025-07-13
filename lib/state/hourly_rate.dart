@@ -12,9 +12,7 @@ class HourlyRate extends _$HourlyRate {
   double build() {
     Future.microtask(() async {
       final saved = await FileStorage().readHourlyRate();
-      if (state == 0 && saved != 0) {
-        state = saved.toDouble();
-      }
+      state = saved.toDouble();
     });
     return 0;
   }
