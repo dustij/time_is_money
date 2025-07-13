@@ -1,4 +1,5 @@
 import "package:riverpod_annotation/riverpod_annotation.dart";
+import "package:time_is_money/core/services/file_storage.dart";
 
 part "current_dollars.g.dart";
 
@@ -21,5 +22,10 @@ class CurrentDollars extends _$CurrentDollars {
 
   void reset() {
     state = 0;
+  }
+
+  void save() {
+    final today = DateTime.timestamp().toLocal().toIso8601String();
+    FileStorage().appendHistory("$today, ${state.toStringAsFixed(2)}");
   }
 }

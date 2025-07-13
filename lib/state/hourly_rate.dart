@@ -1,5 +1,7 @@
 import "package:riverpod_annotation/riverpod_annotation.dart";
 
+import "package:time_is_money/core/services/file_storage.dart";
+
 part "hourly_rate.g.dart";
 
 /// - To regenerate code, run:
@@ -8,10 +10,19 @@ part "hourly_rate.g.dart";
 class HourlyRate extends _$HourlyRate {
   @override
   double build() {
-    return 60;
+    Future.microtask(() async {
+      final saved = await FileStorage().readHourlyRate();
+      if (state == 0 && saved != 0) {
+        state = saved.toDouble();
+      }
+    });
+    return 0;
   }
 
   void set(double newRate) {
     state = newRate;
+    Future(() async {
+      FileStorage().writeHourlyRate(newRate);
+    });
   }
 }

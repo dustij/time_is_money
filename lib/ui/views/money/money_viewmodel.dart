@@ -24,6 +24,7 @@ class MoneyViewmodel {
   }
 
   void savePressed() {
+    _ref.read(currentDollarsProvider.notifier).save();
     _ref.read(currentDollarsProvider.notifier).reset();
     NavigationService().navigateFade(const Layout(child: HomePage()));
   }

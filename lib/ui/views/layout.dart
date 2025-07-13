@@ -3,6 +3,7 @@ import "package:flutter/services.dart";
 
 import "package:flutter_hooks/flutter_hooks.dart";
 import "package:hooks_riverpod/hooks_riverpod.dart";
+import "package:time_is_money/state/hourly_rate.dart";
 
 import "package:time_is_money/ui/views/layout_viewmodel.dart";
 
@@ -12,13 +13,24 @@ class Layout extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final isEditingHourlyRate = useState(false);
+    final focusNode = useFocusNode();
+    final controller = useTextEditingController(
+      text: ref.watch(hourlyRateProvider).toStringAsFixed(2),
+    );
+
     final viewmodel = LayoutViewmodel(
       ref: ref,
-      isEditingHourlyRate: useState(false),
+      isEditingHourlyRate: isEditingHourlyRate,
+      focusNode: focusNode,
+      controller: controller,
     );
-    viewmodel.maybeRequestFocus();
 
     final themeColors = Theme.of(context).colorScheme;
+
+    if (isEditingHourlyRate.value) {
+      Future.microtask(() => focusNode.requestFocus());
+    }
 
     return Scaffold(
       body: Builder(
@@ -53,7 +65,7 @@ class Layout extends HookConsumerWidget {
       drawer: Drawer(
         child: GestureDetector(
           behavior: HitTestBehavior.translucent,
-          onTap: viewmodel.cancelEditing,
+          onTap: viewmodel.finishEditing,
           child: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 40),
             child: Column(
@@ -65,7 +77,7 @@ class Layout extends HookConsumerWidget {
                     children: [
                       GestureDetector(
                         onTap: viewmodel.beginEditing,
-                        child: viewmodel.isEditingHourlyRate
+                        child: isEditingHourlyRate.value
                             ? TextField(
                                 controller: viewmodel.controller,
                                 focusNode: viewmodel.focusNode,
@@ -87,7 +99,7 @@ class Layout extends HookConsumerWidget {
                                 onSubmitted: viewmodel.onSubmitted,
                               )
                             : Text(
-                                "\$${viewmodel.hourlyRateFormatted}",
+                                "\$${viewmodel.formattedRate}",
                                 style: Theme.of(context).textTheme.headlineLarge
                                     ?.copyWith(
                                       color: themeColors.outline,
@@ -95,7 +107,7 @@ class Layout extends HookConsumerWidget {
                                     ),
                               ),
                       ),
-                      viewmodel.isEditingHourlyRate
+                      isEditingHourlyRate.value
                           ? Text(
                               "Enter a new rate",
                               style: Theme.of(context).textTheme.headlineLarge
@@ -126,14 +138,14 @@ class Layout extends HookConsumerWidget {
                   style: TextButton.styleFrom(
                     foregroundColor: themeColors.outline,
                   ),
-                  onPressed: () {},
+                  onPressed: viewmodel.onSettingsPressed,
                 ),
               ],
             ),
           ),
         ),
       ),
-      onDrawerChanged: viewmodel.handleDrawerChanged,
+      onDrawerChanged: viewmodel.onDrawerChanged,
     );
   }
 }
