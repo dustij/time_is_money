@@ -33,40 +33,39 @@ class HistoryPage extends HookConsumerWidget {
                 .toList();
             viewmodel.setRows(rows);
             return Expanded(
-              child: Stack(
+              child: Column(
                 children: [
-                  CustomTable(
-                    headers: ["Date", "Amount"],
-                    rows: rows,
-                    onRowPressed: viewmodel.onRowPressed,
+                  Expanded(
+                    child: CustomTable(
+                      headers: ["Date", "Amount"],
+                      rows: rows,
+                      onRowPressed: viewmodel.onRowPressed,
+                    ),
                   ),
                   if (viewmodel.showDeleteButton)
-                    Positioned(
-                      bottom: 0,
-                      right: 0,
-                      left: 0,
-                      child: Container(
-                        padding: const EdgeInsets.symmetric(vertical: 16),
-                        decoration: BoxDecoration(
-                          color: Theme.of(context).colorScheme.surface,
-                          border: BoxBorder.fromLTRB(
-                            top: BorderSide(
-                              color: Theme.of(
-                                context,
-                              ).colorScheme.outlineVariant,
-                            ),
+                    Container(
+                      width: double.infinity,
+                      padding: const EdgeInsets.symmetric(
+                        vertical: 16,
+                        horizontal: 16,
+                      ),
+                      decoration: BoxDecoration(
+                        color: Theme.of(context).colorScheme.surface,
+                        border: Border(
+                          top: BorderSide(
+                            color: Theme.of(context).colorScheme.outlineVariant,
                           ),
                         ),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            CustomButton(
-                              text: "Delete",
-                              color: Variant.red,
-                              onPressed: viewmodel.onDeletePressed,
-                            ),
-                          ],
-                        ),
+                      ),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          CustomButton(
+                            text: "Delete",
+                            color: Variant.red,
+                            onPressed: viewmodel.onDeletePressed,
+                          ),
+                        ],
                       ),
                     ),
                 ],
