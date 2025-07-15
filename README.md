@@ -1,16 +1,36 @@
-# time_is_money
+# Time Is Money
 
-A new Flutter project.
+A simple Flutter app that tracks your earnings in real time based on your hourly rate.
 
-## Getting Started
+## 📱 Download
 
-This project is a starting point for a Flutter application.
+🚀 Features
+	•	Real-Time Earnings: Start and stop a timer to see your dollars accumulate live.
+	•	Custom Rate: Set and edit your hourly rate.
+	•	Session History: View and delete past work sessions.
+	•	Export Data: Download your earnings data locally as a text file.
 
-A few resources to get you started if this is your first Flutter project:
+## 🔧 Installation
+	1.	Clone this repository:
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+git clone https://github.com/dustij/time-is-money.git
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+
+	2.	Install dependencies:
+
+flutter pub get
+
+
+	3.	Run on iOS simulator or device:
+
+flutter run
+
+
+
+## 🤝 Contributing
+
+Contributions are welcome! Please open issues or pull requests for bug fixes and improvements.
+
+## 📄 License
+
+This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
