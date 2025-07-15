@@ -18,6 +18,11 @@ class FileStorage {
     return File("$path/rate.txt");
   }
 
+  Future<File> writeHistory(String text) async {
+    final file = await _localHistoryFile;
+    return file.writeAsString("$text\n", mode: FileMode.write, flush: true);
+  }
+
   Future<File> appendHistory(String text) async {
     final file = await _localHistoryFile;
     return file.writeAsString("$text\n", mode: FileMode.append, flush: true);

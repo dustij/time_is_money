@@ -23,8 +23,9 @@ class AppTimer extends _$AppTimer {
     if (_timer != null) return; // already running
     state = true;
 
+    final hourlyRate = ref.read(hourlyRateProvider).value ?? 0;
+
     _timer = Timer.periodic(const Duration(milliseconds: 500), (_) {
-      final hourlyRate = ref.read(hourlyRateProvider);
       final amount = calculateRatePerSecond(hourlyRate);
       ref.read(currentDollarsProvider.notifier).incrementBy(amount);
     });

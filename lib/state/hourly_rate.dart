@@ -9,18 +9,18 @@ part "hourly_rate.g.dart";
 @Riverpod(keepAlive: true)
 class HourlyRate extends _$HourlyRate {
   @override
-  double build() {
+  Future<double> build() async {
     Future.microtask(() async {
       final saved = await FileStorage().readHourlyRate();
-      state = saved.toDouble();
+      state = AsyncData(saved.toDouble());
     });
     return 0;
   }
 
-  void set(double newRate) {
-    state = newRate;
+  void set(double value) {
+    state = AsyncData(value);
     Future(() async {
-      FileStorage().writeHourlyRate(newRate);
+      FileStorage().writeHourlyRate(value);
     });
   }
 }
