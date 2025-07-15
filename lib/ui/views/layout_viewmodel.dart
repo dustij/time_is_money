@@ -4,8 +4,6 @@ import "package:flutter_riverpod/flutter_riverpod.dart";
 
 import "package:time_is_money/core/services/navigation_service.dart";
 import "package:time_is_money/state/hourly_rate.dart";
-import "package:time_is_money/ui/views/history/history.dart";
-import "package:time_is_money/ui/views/layout.dart";
 
 class LayoutViewmodel {
   final WidgetRef ref;
@@ -51,6 +49,5 @@ class LayoutViewmodel {
   void onHistoryPressed() {
     NavigationService().goBack();
     NavigationService().navigateTo("/history");
-    // NavigationService().navigateFade(const Layout(child: HistoryPage()));
   }
 }
