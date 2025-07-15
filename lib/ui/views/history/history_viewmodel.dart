@@ -1,4 +1,5 @@
 import "package:flutter/foundation.dart";
+
 import "package:hooks_riverpod/hooks_riverpod.dart";
 
 import "package:time_is_money/core/models/entry.dart";

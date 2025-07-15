@@ -1,9 +1,9 @@
 import "package:flutter/material.dart";
+
 import "package:flutter_hooks/flutter_hooks.dart";
-
 import "package:hooks_riverpod/hooks_riverpod.dart";
-import "package:time_is_money/core/models/entry.dart";
 
+import "package:time_is_money/core/models/entry.dart";
 import "package:time_is_money/ui/views/history/history_viewmodel.dart";
 import "package:time_is_money/ui/widgets/custom_button.dart";
 import "package:time_is_money/ui/widgets/custom_table.dart";
