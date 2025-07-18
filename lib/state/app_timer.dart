@@ -14,6 +14,12 @@ part "app_timer.g.dart";
 class AppTimer extends _$AppTimer {
   Timer? _timer;
 
+  late DateTime _lastPausedTime;
+  bool _isPaused = false;
+
+  double get _hourlyRate => ref.read(hourlyRateProvider).value ?? 0;
+  double get _ratePerSecond => calculateRatePerSecond(_hourlyRate);
+
   @override
   bool build() {
     return false;
@@ -23,11 +29,8 @@ class AppTimer extends _$AppTimer {
     if (_timer != null) return; // already running
     state = true;
 
-    final hourlyRate = ref.read(hourlyRateProvider).value ?? 0;
-
     _timer = Timer.periodic(const Duration(milliseconds: 500), (_) {
-      final amount = calculateRatePerSecond(hourlyRate);
-      ref.read(currentDollarsProvider.notifier).incrementBy(amount);
+      ref.read(currentDollarsProvider.notifier).incrementBy(_ratePerSecond);
     });
   }
 
@@ -35,5 +38,20 @@ class AppTimer extends _$AppTimer {
     _timer?.cancel();
     _timer = null;
     state = false;
+  }
+
+  void onAppPaused() {
+    _lastPausedTime = DateTime.now();
+    _isPaused = true;
+  }
+
+  void onAppResumed() {
+    if (!_isPaused) return;
+
+    final now = DateTime.now();
+    final pausedDuration = now.difference(_lastPausedTime);
+    ref
+        .read(currentDollarsProvider.notifier)
+        .incrementBy(pausedDuration.inSeconds * _ratePerSecond);
   }
 }
